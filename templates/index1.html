@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Index</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+  <body>
+    <h1>this is the first class on project portfolio</h1>
+    {% for menu in first_menu %}
+    <ul>
+      <li>
+        <h2 class="item-name" onclick="toggleDescription(this)">
+          {{ menu.name }}
+        </h2>
+        <div class="item-description">{{ menu.desc }}</div>
+      </li>
+    </ul>
+    {% endfor %}
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  </body>
+</html>
