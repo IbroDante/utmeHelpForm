@@ -1,4 +1,4 @@
-#!/Users/mac/Documents/EduNg/env/bin/python3
+#!/home/ubuntu/EduNg/env/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
