@@ -17,67 +17,55 @@
       <h3
         class="title text-capitalize font-weight-light text-dark text-center mb-5"
       >
-        register
-        <span class="font-weight-bold">now</span>
+        Register <span class="font-weight-bold">now</span>
       </h3>
       <!-- content -->
       <div class="sub-main-w3 pt-md-4">
-        <form action="#" method="post">
+        <form method="POST" action="">
+          {{ form.hidden_tag() }}
+
           <div class="form-style-agile form-group">
-            <label>
-              Your Name
-              <i class="fas fa-user"></i>
-            </label>
-            <input
-              placeholder="Your Name"
-              class="form-control"
-              name="Name"
-              type="text"
-              required=""
-            />
+            {{ form.name.label(class="form-label") }} {{
+            form.name(class="form-control", placeholder="Full Name") }} {% for
+            error in form.name.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
           </div>
+
           <div class="form-style-agile form-group">
-            <label>
-              Email
-              <i class="fas fa-envelope"></i>
-            </label>
-            <input
-              placeholder="Email"
-              class="form-control"
-              name="Email"
-              type="email"
-              required=""
-            />
+            {{ form.username.label(class="form-label") }} {{
+            form.username(class="form-control", placeholder="Username") }} {%
+            for error in form.username.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
           </div>
+
           <div class="form-style-agile form-group">
-            <label>
-              Password
-              <i class="fas fa-unlock-alt"></i>
-            </label>
-            <input
-              placeholder="Password"
-              class="form-control"
-              name="Password"
-              id="password1"
-              type="password"
-              required=""
-            />
+            {{ form.email.label(class="form-label") }} {{
+            form.email(class="form-control", placeholder="Email") }} {% for
+            error in form.email.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
           </div>
+
           <div class="form-style-agile form-group">
-            <label>
-              Confirm Password
-              <i class="fas fa-unlock-alt"></i>
-            </label>
-            <input
-              placeholder="Confirm Password"
-              class="form-control"
-              name="Confirm Password"
-              id="password2"
-              type="password"
-              required=""
-            />
+            {{ form.password.label(class="form-label") }} {{
+            form.password(class="form-control", placeholder="Password") }} {%
+            for error in form.password.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+          </div>
+
+          <div class="form-style-agile form-group">
+            {{ form.confirm_password.label(class="form-label") }} {{
+            form.confirm_password(class="form-control",
+            placeholder="ConfirmPassword") }} {% for error in
+            form.confirm_password.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
           </div>
           <!-- switch -->
+
           <ul class="list-unstyled list-login">
             <li class="switch-agileits float-left">
               <label class="switch text-capitalize">
@@ -88,12 +76,20 @@
             </li>
           </ul>
           <!-- //switch -->
-          <input type="submit" value="Register" />
+          {{ form.submit(class="btn btn-primary", value="Register") }}
+
+          <p class="text-center dont-do mt-4 text-white">
+            Already have an account?
+            <a href="{{ url_for('login')}}" class="text-white font-weight-bold">
+              Login
+            </a>
+          </p>
         </form>
       </div>
       <!-- //content -->
     </div>
   </div>
+
   <!-- //register -->
 
   <!-- brands -->

@@ -152,7 +152,9 @@
                   </div>
                 </div>
                 <div class="col-sm-4 col-6 top-login-butt text-right mt-sm-2">
-                  <a href="login.html" class="button-head-mow3 text-white"
+                  <a
+                    href="{{ url_for('login')}}"
+                    class="button-head-mow3 text-white"
                     >Login</a
                   >
                 </div>
@@ -236,8 +238,10 @@
               <div class="dropdown-menu">
                 <a class="dropdown-item" href="about.html">Instructors</a>
                 <a class="dropdown-item" href="index.html">What We Do</a>
-                <a class="dropdown-item" href="login.html">Login</a>
-                <a class="dropdown-item" href="register.html">Register</a>
+                <a class="dropdown-item" href="{{ url_for('login')}}">Login</a>
+                <a class="dropdown-item" href="{{ url_for('register')}}"
+                  >Register</a
+                >
                 <a class="dropdown-item" href="404.html">404 Page</a>
                 <a class="dropdown-item" href="coming_soon.html">Coming Soon</a>
                 <a class="dropdown-item" href="form.html">Admission Form</a>
@@ -252,6 +256,11 @@
             </li>
             <li class="nav-item">
               <a class="nav-link text-white" href="contact.html">Contact Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="{{ url_for('dashboard')}}"
+                >Dashboard</a
+              >
             </li>
           </ul>
         </div>
