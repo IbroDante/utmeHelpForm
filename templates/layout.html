@@ -152,11 +152,17 @@
                   </div>
                 </div>
                 <div class="col-sm-4 col-6 top-login-butt text-right mt-sm-2">
-                  <a
+                  {% if not current_user.is_authenticated %}
+<a
                     href="{{ url_for('login')}}"
                     class="button-head-mow3 text-white"
                     >Login</a
-                  >
+                  >{% endif %}
+
+                  {% if current_user.is_authenticated %}
+    <a href="{{ url_for('logout') }}" onclick="return confirm('Are you sure you want to logout?')" class="btn btn-danger">Logout</a>
+{% endif %}
+
                 </div>
               </div>
             </div>
@@ -438,6 +444,22 @@
     <!--  necessary snippets for few javascript files -->
     <script src="{{ url_for('static', filename='js/edulearn.js') }}"></script>
 
+    <script>var inactivityTimeout = 5 * 60 * 1000; // 15 minutes (in milliseconds)
+      var logoutTimer;
+      
+      function resetLogoutTimer() {
+          clearTimeout(logoutTimer);
+          logoutTimer = setTimeout(function() {
+              window.location.href = '/logout'; // Redirect to logout route
+          }, inactivityTimeout);
+      }
+      
+      document.addEventListener('mousemove', resetLogoutTimer);
+      document.addEventListener('keypress', resetLogoutTimer);
+      
+      // Initial call to start the timer
+      resetLogoutTimer();
+      </script>
     <!-- //Js files -->
   </body>
 </html>

@@ -30,131 +30,128 @@
         <span class="font-weight-bold">form</span>
       </h3>
       <div class="register-form pt-md-4">
-        <form action="#" method="post">
+        <form action="{{ url_for('form') }}" method="POST">
+          {{ form.hidden_tag() }}
+
           <div class="styled-input form-group">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Your Name"
-              name="Your name"
-              required=""
-            />
+            {{ form.name.label(class="form-control") }} {{
+            form.name(class="form-control", required="required") }} {% for error
+            in form.name.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
           </div>
+
           <div class="styled-input form-group">
-            <input
-              id="datepicker"
-              class="form-control"
-              placeholder="Birth Date"
-              name="Text"
-              type="text"
-              value=""
-              onfocus="this.value = '';"
-              onblur="if (this.value == '') {this.value = 'mm/dd/yyyy';}"
-              required=""
-            />
+            {{ form.birthday.label(class="form-control",
+            placeholder="YYYY-MM-DD") }} {{ form.birthday(class="form-control",
+            placeholder="YYYY-MM-DD", required="required") }} {% for error in
+            form.birthday.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
           </div>
+
           <div class="styled-input agile-styled-input-top form-group">
-            <select class="category2" required="">
-              <option value="">Gender</option>
-              <option value="">Female</option>
-              <option value="">Male</option>
-              <option value="">Other</option>
-            </select>
+            {{ form.gender.label(class="category2") }} {{
+            form.gender(class="category2", required="required") }} {% for error
+            in form.gender.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
           </div>
+
           <div class="styled-input form-group">
-            <input
-              type="email"
-              class="form-control"
-              placeholder="Your E-mail"
-              name="Email"
-              required=""
-            />
+            {{ form.phonenumber.label(class="form-control", placeholder="Phone
+            Number") }} {{ form.phonenumber(class="form-control",
+            placeholder="Phone Number", required="required") }} {% for error in
+            form.phonenumber.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
           </div>
-          <div class="styled-input form-group">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Phone Number"
-              name="Phone"
-              required=""
-            />
-          </div>
+
           <div class="styled-input agile-styled-input-top form-group">
-            <select class="category2" required="">
-              <option value="">Select Course</option>
-              <option value="">Language</option>
-              <option value="">Communication</option>
-              <option value="">Business</option>
-              <option value="">Software</option>
-              <option value="">Social Media</option>
-              <option value="">Photography</option>
-              <option value="">Web Designing</option>
-              <option value="">Web Technology</option>
-              <option value="">PC Systems</option>
-              <option value="">IT Foundations</option>
-              <option value="">HR Management</option>
-              <option value="">Modeling</option>
-              <option value="">Basic Marketing</option>
-            </select>
-            <span></span>
+            {{ form.selectcourse.label(class="category2") }} {{
+            form.selectcourse(class="category2", required="required") }} {% for
+            error in form.selectcourse.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
           </div>
+
           <div class="styled-input form-group">
-            <div class="agileits_w3layouts_grid">
-              <select class="category2" name="category1" required="">
-                <option value="">Select Course Time</option>
-                <option value="">Hours: 8am - 10am</option>
-                <option value="">Hours: 10am - 12pm</option>
-                <option value="">Hours: 12pm - 4pm</option>
-                <option value="">Hours: 4pm - 7pm</option>
-                <option value="">Hours: 7pm - 9pm</option>
-              </select>
-            </div>
+            {{ form.selectcoursetime.label(class="category2") }} {{
+            form.selectcoursetime(class="category2", required="required") }} {%
+            for error in form.selectcoursetime.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
           </div>
+
           <div class="styled-input">
             <label class="header-admin-form font-weight-bold text-dark my-3"
               >Your Address</label
             >
+
             <div class="form-group">
-              <input
-                type="text"
-                name="name"
-                class="form-control"
-                placeholder="Address"
-                title="Please enter your Address"
-                required=""
-              />
+              {{ form.address.label(class="form-control", placeholder="Address")
+              }} {{ form.address(class="form-control", placeholder="Address",
+              title="Please enter your Address", required="required") }} {% for
+              error in form.address.errors %}
+              <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
+
             <div class="form-group">
-              <input
-                type="text"
-                name="name"
-                class="form-control"
-                placeholder="Line"
-                title="Please enter your Line"
-                required=""
-              />
+              {{ form.line.label(class="form-control", placeholder="Line") }} {{
+              form.line(class="form-control", placeholder="Line", title="Please
+              enter your Line", required="required") }} {% for error in
+              form.line.errors %}
+              <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
+
             <div class="form-group">
-              <input
-                type="text"
-                name="name"
-                class="form-control"
-                placeholder="City"
-                title="Please enter your City"
-                required=""
-              />
+              {{ form.city.label(class="form-control", placeholder="City") }} {{
+              form.city(class="form-control", placeholder="City", title="Please
+              enter your City", required="required") }} {% for error in
+              form.city.errors %}
+              <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
+
             <div class="form-group">
-              <input
-                type="text"
-                name="name"
-                class="form-control"
-                placeholder="Zip Code"
-                title="Please enter your Zip code"
-                required=""
-              />
+              {{ form.zipcode.label(class="form-control") }} {{
+              form.zipcode(class="form-control", title="Please enter your Zip
+              code", required="required") }} {% for error in form.zipcode.errors
+              %}
+              <span class="text-danger">{{ error }}</span>
+              {% endfor %}
+            </div>
+
+            <div class="form-group">
+              {{ form.material_name.label(class="form-control") }} {{
+              form.material_name(class="form-control", title="material_name ",
+              required="required") }} {% for error in form.material_name.errors
+              %}
+              <span class="text-danger">{{ error }}</span>
+              {% endfor %}
+            </div>
+
+            <div class="form-group">
+              {{ form.material_description.label(class="form-control") }} {{
+              form.material_description(class="form-control",
+              title="material_description", required="required") }} {% for error
+              in form.material_description.errors %}
+              <span class="text-danger">{{ error }}</span>
+              {% endfor %}
+            </div>
+
+            <div class="form-group">
+              {{ form.material_file.label(class="form-control") }} {{
+              form.material_file(class="form-control", title="material_file",
+              required="required") }} {% for error in form.material_file.errors
+              %}
+              <span class="text-danger">{{ error }}</span>
+              {% endfor %}
             </div>
           </div>
+
           <input type="submit" value="Submit" />
         </form>
       </div>

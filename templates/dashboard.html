@@ -1,11 +1,43 @@
 {% extends 'layout.html' %} {% block head %}
 <title>EduNg | Dashboard</title>
 {% endblock %} {% block body %}
-  <body>
-    <h1>Welcome, you are logged in, {{ user.username }}</h1>
-    <p>Duty: {{ user.roles }}</p>
-    <a href="{{url_for('logout')}}">Logout</a>
+<body>
+  <br />
+  <br />
+  <br />
+  <div class="container">
+    <h1>Welcome, {{ user.username }}!</h1>
+    <h2>Your Form Submissions</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>User Name</th>
+          <th>Email</th>
+          <th>Phone Number</th>
+          <th>Select Course</th>
+          <th>Select course Time</th>
+          <th>Uploads</th>
 
-    {% endblock %}
-  </body>
-</html>
+          <!-- Add more table headers for other form fields as needed -->
+        </tr>
+      </thead>
+      <tbody>
+        {% for form in user_forms %}
+        <tr>
+          <td>{{ form.name }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ form.phonenumber }}</td>
+          <td>{{ form.selectcourse }}</td>
+          <td>{{ form.selectcoursetime }}</td>
+          <td>{{ form.file_path }}</td>
+
+          <!-- Add more table cells for other form fields as needed -->
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endblock %}
+</body>
