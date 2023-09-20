@@ -1,0 +1,78 @@
+{% extends 'layout.html' %} {% block head %}
+<title>EduNg | Edit Form</title>
+{% endblock %} {% block body %}
+
+<div class="container">
+  <br />
+  <br />
+  <h1>Edit Form</h1>
+  <form method="POST">
+    {{ form.hidden_tag() }}
+    <!-- Name Field -->
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        class="form-control"
+        value="{{ form.name.data }}"
+        required
+      />
+    </div>
+
+    <!-- username Field -->
+    <div class="form-group">
+      <label for="username">User Name</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        class="form-control"
+        value="{{ user.username.data }}"
+        required
+      />
+    </div>
+    <label for="name">Email</label>
+    <input
+      type="text"
+      id="email"
+      name="email"
+      class="form-control"
+      value="{{ user.email.data }}"
+      required
+    />
+    <label for="phonenumber">Phone Number</label>
+    <input
+      type="text"
+      id="phonenumber"
+      name="phonenumber"
+      class="form-control"
+      value="{{ form.phonenumber.data }}"
+      required
+    />
+    <label for="selectcourse">Select Course</label>
+    <input
+      type="text"
+      id="selectcourse"
+      name="selectcourse"
+      class="form-control"
+      value="{{ form.selectcourse.data }}"
+      required
+    />
+    <label for="selectcoursetime">Select Course Time</label>
+    <input
+      type="text"
+      id="selectcoursetime"
+      name="selectcoursetime"
+      class="form-control"
+      value="{{ form.selectcoursetime.data }}"
+      required
+    />
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <br />
+    <br />
+  </form>
+</div>
+{% endblock %}

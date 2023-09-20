@@ -23,6 +23,8 @@
   <!-- //banner -->
 
   <!-- blog -->
+  {% for post in posts %}
+
   <div class="blog-w3l py-5">
     <div class="container py-xl-5 py-lg-3">
       <h3
@@ -31,17 +33,19 @@
         blog
         <span class="font-weight-bold">page</span>
       </h3>
+
       <div class="row blog-content pt-md-4">
         <!-- left side -->
+
         <div class="col-lg-8 blog_section">
           <div class="card">
             <img class="card-img-top" src="static/images/banner2.jpg" alt="" />
             <div class="card-body text-center">
               <h6 class="blog-first text-dark">
-                <i class="far fa-user mr-2"></i>Adrian Lie
+                <i class="far fa-user mr-2"></i>{{ post.author }}
               </h6>
               <ul class="blog_list my-3">
-                <li>May 15, 2018</li>
+                <li>{{ post.author }}</li>
                 <li class="mx-3">
                   <a href="#">
                     <i class="far fa-heart mr-1"></i>
@@ -55,13 +59,11 @@
                   >
                 </li>
               </ul>
+
               <h5 class="card-title">
-                <a href="single.html" class="text-dark">Blog title here</a>
+                <a href="single.html" class="text-dark">{{ post.title }}</a>
               </h5>
-              <p class="card-text">
-                Morbi eget dui elit. In lectus eros, convallis vel dolor vitae,
-                semper sodales risus. Donec convallis maximus neque vel cursus.
-              </p>
+              <p class="card-text">{{ post.content }}</p>
               <a href="single.html" class="btn btn-primary blog-button mt-3"
                 >Read More</a
               >
@@ -71,10 +73,10 @@
             <img class="card-img-top" src="static/images/banner3.jpg" alt="" />
             <div class="card-body text-center">
               <h6 class="blog-first text-dark">
-                <i class="far fa-user mr-2"></i>James Doe
+                <i class="far fa-user mr-2"></i>{{ post.author }}
               </h6>
               <ul class="blog_list my-3">
-                <li>May 22, 2018</li>
+                <li>{{ post.author }}</li>
                 <li class="mx-3">
                   <a href="#">
                     <i class="far fa-heart mr-1"></i>
@@ -89,12 +91,9 @@
                 </li>
               </ul>
               <h5 class="card-title">
-                <a href="single.html" class="text-dark">Blog title here</a>
+                <a href="single.html" class="text-dark">{{ post.title }}</a>
               </h5>
-              <p class="card-text">
-                Morbi eget dui elit. In lectus eros, convallis vel dolor vitae,
-                semper sodales risus. Donec convallis maximus neque vel cursus.
-              </p>
+              <p class="card-text">{{ post.content }}</p>
               <a href="single.html" class="btn btn-primary blog-button mt-3"
                 >Read More</a
               >
@@ -104,10 +103,10 @@
             <img class="card-img-top" src="static/images/banner4.jpg" alt="" />
             <div class="card-body text-center">
               <h6 class="blog-first text-dark">
-                <i class="far fa-user mr-2"></i>Jenny Joy
+                <i class="far fa-user mr-2"></i>{{ post.author }}
               </h6>
               <ul class="blog_list my-3">
-                <li>June 02, 2018</li>
+                <li>{{ post.author }}</li>
                 <li class="mx-3">
                   <a href="#">
                     <i class="far fa-heart mr-1"></i>
@@ -122,17 +121,15 @@
                 </li>
               </ul>
               <h5 class="card-title">
-                <a href="single.html" class="text-dark">Blog title here</a>
+                <a href="single.html" class="text-dark">{{ post.title }}</a>
               </h5>
-              <p class="card-text">
-                Morbi eget dui elit. In lectus eros, convallis vel dolor vitae,
-                semper sodales risus. Donec convallis maximus neque vel cursus.
-              </p>
+              <p class="card-text">{{ post.content }}</p>
               <a href="single.html" class="btn btn-primary blog-button mt-3"
                 >Read More</a
               >
             </div>
           </div>
+
           <nav aria-label="Page navigation example">
             <ul class="pagination mt-5">
               <li class="page-item disabled">
@@ -152,6 +149,7 @@
               </li>
             </ul>
           </nav>
+
           <!-- //left side -->
         </div>
         <!-- right side -->
@@ -351,6 +349,8 @@
       </div>
     </div>
   </div>
+  {% endfor %}
+
   <!-- //blog -->
 
   <!-- brands -->
