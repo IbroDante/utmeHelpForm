@@ -2,58 +2,49 @@
 <title>EduNg | Dashboard</title>
 {% endblock %} {% block body %}
 <body>
-  <br />
-  <br />
-  <br />
-  <div class="container">
-    <h1>Welcome, {{ user.username }}!</h1>
-    <h2>Your Form Submissions</h2>
-    <!-- ... (previous code) ... -->
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>User Name</th>
-          <th>Email</th>
-          <th>Phone Number</th>
-          <th>Select Course</th>
-          <th>Select course Time</th>
-          <th>Actions</th>
-          <!-- Add a new column for actions -->
-        </tr>
-      </thead>
-      <tbody>
-        {% for user_form in user_forms %}
-        <!-- Use a different variable name here -->
-        <tr>
-          <td>{{ user_form.name }}</td>
-          <td>{{ user.username }}</td>
-          <td>{{ user.email }}</td>
-          <td>{{ user_form.phonenumber }}</td>
-          <td>{{ user_form.selectcourse }}</td>
-          <td>{{ user_form.selectcoursetime }}</td>
-          <td>
-            <!-- Edit Form Button -->
-            <a
-              href="{{ url_for('edit_form', form_id=user_form.id) }}"
-              class="btn btn-primary"
-              >Edit</a
-            >
-
-            <!-- Delete Form Button (with a confirmation dialog) -->
-
-            <button
-              class="btn btn-danger"
-              onclick="deleteForm({{ user_form.id }})"
-            >
-              Delete
-            </button>
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    <!-- ... (remaining code) ... -->
+  <div class="container mt-5">
+    <h1 class="text-center">Welcome, {{ user.username }}!</h1>
+    <h2 class="text-center">Your Form Submissions</h2>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>User Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Select Course</th>
+            <th>Select Course Time</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user_form in user_forms %}
+          <tr>
+            <td>{{ user_form.name }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user_form.phonenumber }}</td>
+            <td>{{ user_form.selectcourse }}</td>
+            <td>{{ user_form.selectcoursetime }}</td>
+            <td>
+              <a
+                href="{{ url_for('edit_form', form_id=user_form.id) }}"
+                class="btn btn-primary btn-sm"
+                >Edit</a
+              >
+              <button
+                class="btn btn-danger btn-sm"
+                onclick="deleteForm('{{ user_form.id }}')"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
   </div>
 </body>
 {% endblock %}
