@@ -479,7 +479,7 @@ def addblog():
 
 
 @app.route("/blog.html")
-@login_required
+# @login_required
 def blog():
     # posts = Blog.query.order_by(Blog.author)
     # return render_template("blog.html", posts=posts)
