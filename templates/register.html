@@ -1,16 +1,8 @@
 {% extends 'layout.html' %} {% block head %}
-<title>EduNg | Register Form</title>
+<title>Post | Form</title>
 {% endblock %} {% block body %}
 
 <body>
-  <!-- banner -->
-  <div class="banner-agile-2">
-    <!-- navigation -->
-    <div class="navigation-w3ls"></div>
-  </div>
-  <!-- breadcrumb -->
-  <!-- //banner -->
-
   <!-- register -->
   <div class="login-w3ls py-5">
     <div class="container py-xl-5 py-lg-3">
@@ -41,14 +33,6 @@
           </div>
 
           <div class="form-style-agile form-group">
-            {{ form.email.label(class="form-label") }} {{
-            form.email(class="form-control", placeholder="Email") }} {% for
-            error in form.email.errors %}
-            <span class="text-danger">{{ error }}</span>
-            {% endfor %}
-          </div>
-
-          <div class="form-style-agile form-group">
             {{ form.password.label(class="form-label") }} {{
             form.password(class="form-control", placeholder="Password") }} {%
             for error in form.password.errors %}
@@ -66,15 +50,6 @@
           </div>
           <!-- switch -->
 
-          <ul class="list-unstyled list-login">
-            <li class="switch-agileits float-left">
-              <label class="switch text-capitalize">
-                <input type="checkbox" />
-                <span class="slider-switch slider-switch-2 round"></span>
-                I Accept to the Terms & Conditions
-              </label>
-            </li>
-          </ul>
           <!-- //switch -->
           {{ form.submit(class="btn btn-primary", value="Register") }}
 
