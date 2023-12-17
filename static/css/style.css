@@ -3264,4 +3264,13 @@ li.subitem1 p {
   }
 }
 
+.logo-container {
+  text-align: center;
+}
+
+.transparent-logo {
+  opacity: 0.5; /* Adjust the opacity as needed (0 is fully transparent, 1 is fully opaque) */
+  /* Add any other styling for the logo */
+}
+
 /*--//responsive--*/

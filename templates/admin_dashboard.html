@@ -1,0 +1,126 @@
+{% extends 'layout.html' %} {% block head %}
+<title>Admin Dashboard</title>
+<!-- DataTables CSS -->
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{{ url_for('static', filename='datatables/css/jquery.dataTables.css') }}"
+/>
+
+<!-- jQuery -->
+<script
+  type="text/javascript"
+  charset="utf8"
+  src="https://code.jquery.com/jquery-3.5.1.js"
+></script>
+
+<!-- DataTables JavaScript -->
+<script
+  type="text/javascript"
+  charset="utf8"
+  src="{{ url_for('static', filename='datatables/js/jquery.dataTables.js') }}"
+></script>
+{% endblock %} {% block body %}
+
+<body>
+  <div class="container mt-5">
+    <h1 class="text-center mb-4">Admin Dashboard</h1>
+    <h2 class="text-center mb-3">All Transferred Forms</h2>
+    <h4 class="text-center" style="color: blue">
+      {% with messages = get_flashed_messages() %} {% if messages %}
+      <ul class="flashes">
+        {% for message in messages %} {{ message }} {% endfor %}
+      </ul>
+      {% endif %} {% endwith %}
+    </h4>
+
+    <!-- Display 'Yes' and 'No' counts with color coding above -->
+    <div class="text-center mt-3">
+      <div class="mb-2">
+        <span class="badge badge-primary p-3" style="font-size: 24px">
+          <strong>Resolved Issues:</strong> {{
+          transferred_forms|selectattr('resolved', 'equalto', 'yes')|list|length
+          }}
+        </span>
+      </div>
+      <div>
+        <span class="badge badge-danger p-3" style="font-size: 24px">
+          <strong> Unresolved Issues:</strong> {{
+          transferred_forms|selectattr('resolved', 'equalto', 'no')|list|length
+          }}
+        </span>
+      </div>
+    </div>
+    <br />
+    <br />
+    <!-- Add code to display all transferred forms for the admin -->
+    <div class="table-responsive">
+      <table class="table table-bordered" id="adminFormsTable">
+        <thead class="thead-dark">
+          <tr>
+            <th>Name</th>
+            <th>Sender Username</th>
+            <th>Recipient Username</th>
+            <th>Description</th>
+            <th>Solution</th>
+            <th>Status (Resolved)</th>
+            <th>Transfer Date</th>
+            <th>Transfer Time</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for admin_form in transferred_forms %}
+          <tr>
+            <td>{{ admin_form.name }}</td>
+            <td>{{ admin_form.sender.username }}</td>
+            <td>
+              {{ admin_form.recipient.username if admin_form.recipient else
+              'N/A' }}
+            </td>
+            <td>{{ admin_form.description }}</td>
+            <td>{{ admin_form.solution }}</td>
+            <td>
+              {% if admin_form.resolved == 'yes' %}
+              <button class="btn btn-primary btn-sm">Yes</button>
+              {% elif admin_form.resolved == 'no' %}
+              <button class="btn btn-danger btn-sm">No</button>
+              {% else %}
+              <span style="color: orange">Unknown</span>
+              {% endif %}
+            </td>
+            <td>{{ admin_form.date_updated.strftime('%Y-%m-%d') }}</td>
+            <td>{{ admin_form.date_updated.strftime('%H:%M:%S') }}</td>
+            <td>
+              <a
+                href="{{ url_for('view_form', form_id=admin_form.id) }}"
+                class="btn btn-primary btn-sm"
+                >View</a
+              >
+              <a
+                href="{{ url_for('edit_form', form_id=admin_form.id) }}"
+                class="btn btn-warning btn-sm"
+                >Edit</a
+              >
+              <button
+                class="btn btn-danger btn-sm"
+                onclick="deleteForm('{{ admin_form.id }}')"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      $.noConflict();
+      jQuery(document).ready(function ($) {
+        $("#adminFormsTable").DataTable();
+      });
+    </script>
+  </div>
+</body>
+{% endblock %}

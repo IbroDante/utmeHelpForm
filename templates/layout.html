@@ -185,11 +185,25 @@
             </li>
 
             <li class="nav-item">
+              <a
+                class="nav-link text-white"
+                href="{{ url_for('admin_dashboard')}}"
+                >Admin Dashboard</a
+              >
+            </li>
+
+            <li class="nav-item">
               <a class="nav-link text-white" href="form.html">Form</a>
             </li>
             <li class="nav-item">
               <a class="nav-link text-white" href="summary"
                 >Summary Solution Posts</a
+              >
+            </li>
+            <br />
+            <li class="nav-item">
+              <a class="nav-link text-white" href="frequently_selected_values"
+                >Frequently Problem Centres</a
               >
             </li>
           </ul>
@@ -222,8 +236,8 @@
               ITS Department. All Rights Reserved | Design by
 
               <a href="http://www.jamb.gov.ng" target="_blank"
-                >ITS Department</a
-              >
+                >Admissions Support Unit | ITS
+              </a>
             </p>
             <!-- social icons -->
 
@@ -288,7 +302,7 @@
     <!--  necessary snippets for few javascript files -->
     <script src="{{ url_for('static', filename='js/edulearn.js') }}"></script>
 
-    <script>
+    <!-- <script>
       var inactivityTimeout = 5 * 60 * 1000; // 15 minutes (in milliseconds)
       var logoutTimer;
 
@@ -304,14 +318,14 @@
 
       // Initial call to start the timer
       resetLogoutTimer();
-    </script>
+    </script> -->
 
-    <script>
+    <!-- <script>
       // Auto-refresh the page every 5 minutes (300,000 milliseconds)
       setInterval(function () {
         location.reload();
       }, 300000);
-    </script>
+    </script> -->
 
     <!-- //Js files -->
   </body>

@@ -16,6 +16,14 @@
         <form method="POST" action="">
           {{ form.hidden_tag() }}
 
+          <div class="logo-container">
+            <img
+              src="static/images/logo.png"
+              class="transparent-logo"
+              alt="Logo"
+            />
+          </div>
+
           <div class="form-style-agile form-group">
             {{ form.name.label(class="form-label") }} {{
             form.name(class="form-control", placeholder="Full Name") }} {% for

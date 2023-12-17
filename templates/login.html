@@ -3,6 +3,7 @@
 {% endblock %} {% block body %}
 <body>
   <!-- breadcrumb -->
+
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
@@ -15,18 +16,33 @@
   <!-- //banner -->
 
   <!-- login -->
+  <h5 class="text-center" style="color: red">
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <ul class="flashes">
+      {% for message in messages %} {{ message }} {% endfor %}
+    </ul>
+    {% endif %} {% endwith %}
+  </h5>
   <div class="login-w3ls py-5">
     <div class="container py-xl-5 py-lg-3">
       <h3
         class="title text-capitalize font-weight-light text-dark text-center mb-5"
       >
-        Login
-        <span class="font-weight-bold">now</span>
+        Login <span class="font-weight-bold">now</span>
       </h3>
       <!-- content -->
       <div class="sub-main-w3 pt-md-4">
         <form method="POST" action="">
           {{ form.hidden_tag() }}
+
+          <!-- Add a div to hold the logo with a specific class -->
+          <div class="logo-container">
+            <img
+              src="static/images/logo.png"
+              class="transparent-logo"
+              alt="Logo"
+            />
+          </div>
 
           <div class="form-style-agile form-group">
             {{ form.username.label(class="form-label") }} {{
@@ -46,16 +62,12 @@
 
           <!-- switch -->
           <ul class="list-unstyled list-login">
-            <li class="switch-agileits float-left">
-              <label class="switch text-capitalize">
-                <input type="checkbox" />
-                <span class="slider-switch round"></span>
-                keep me signed in</a>
-              </label>
-            </li>
+            <div class="text-center mt-3">
+              <!-- Other buttons or links as needed -->
+            </div>
             <li class="float-right">
-              <a href="#" class="text-right text-white text-capitalize"
-                >forgot password?</a
+              <a href="#" class="text-right text-white text-capitalize">
+                forgot password?</a
               >
             </li>
           </ul>
@@ -77,6 +89,7 @@
       <!-- //content -->
     </div>
   </div>
+
   <!-- //login -->
 
   <!-- brands -->

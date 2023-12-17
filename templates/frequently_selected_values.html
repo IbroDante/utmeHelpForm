@@ -1,0 +1,31 @@
+{% extends 'layout.html' %} {% block head %}
+<title>Centres with Frequent Problems</title>
+
+{% endblock %} {% block body %}
+<body>
+  <div class="container mt-5">
+    <h4 class="text-center">Centres with Frequent Problems</h4>
+    <br />
+    <div class="row">
+      <div class="col-md-6">
+        <h5>Centre Number</h5>
+        <ul class="list-group">
+          {% for centreno_value in frequent_centreno_values %}
+          <li class="list-group-item">{{ centreno_value }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="col-md-6">
+        <h5>Centre Name</h5>
+        <ul class="list-group">
+          {% for centrename_value in frequent_centrename_values %}
+          <li class="list-group-item">{{ centrename_value }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  {% endblock %}
+</body>

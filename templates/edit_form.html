@@ -31,59 +31,59 @@
 
           <div class="styled-input form-group">
             <label for="name" class="form-control">Name</label>
-            <input type="text" class="form-control" id="name" name="name" value="{{ form.name }}" >
-          </div>
-
-          <div class="styled-input agile-styled-input-top form-group">
-            <label for="centrename" class="category2">Centre Name</label>
-            <input type="text" class="form-control" id="centrename" name="centrename" value="{{ form.centrename }}" >
-          </div>
-
-          <div class="styled-input form-group">
-            <label for="state" class="form-label">State</label>
-            <input type="text" class="form-control" id="state" name="state" value="{{ form.state }}" >
+            <input type="text" class="form-control" id="name" name="name" value="{{ form.name }}" required>
           </div>
 
           <div class="styled-input form-group">
             <label for="centreno" class="form-label">Centre No</label>
-            <input type="text" class="form-control" id="centreno" name="centreno" value="{{ form.centreno }}" >
+            <input type="text" class="form-control" id="centreno" name="centreno" value="{{ form.centreno }}" required>
+          </div>
+          
+          <div class="styled-input agile-styled-input-top form-group">
+            <label for="centrename" class="category2">Centre Name</label>
+            <input type="text" class="form-control" id="centrename" name="centrename" value="{{ form.centrename }}" required>
+          </div>
+
+          <div class="styled-input form-group">
+            <label for="state" class="form-label">State</label>
+            <input type="text" class="form-control" id="state" name="state" value="{{ form.state }}" required>
           </div>
 
           <div class="styled-input form-group">
             <label for="sessionno" class="form-label">Session No</label>
-            <input type="text" class="form-control" id="sessionno" name="sessionno" value="{{ form.sessionno }}" >
+            <input type="text" class="form-control" id="sessionno" name="sessionno" value="{{ form.sessionno }}" required>
           </div>
 
           <div class="styled-input agile-styled-input-top form-group">
             <label for="caller" class="category2">Caller</label>
-            <input type="text" class="form-control" id="caller" name="caller" value="{{ form.caller }}" >
+            <input type="text" class="form-control" id="caller" name="caller" value="{{ form.caller }}" required>
           </div>
 
           <div class="styled-input form-group">
             <label for="issuecat" class="category2">Issue Category</label>
-            <input type="text" class="form-control" id="issuecat" name="issuecat" value="{{ form.issuecat }}" >
+            <input type="text" class="form-control" id="issuecat" name="issuecat" value="{{ form.issuecat }}" required>
           </div>
 
           <div class="form-group">
             <label for="description" class="form-label">Description</label>
-            <textarea class="form-control" id="description" name="description" rows="10" >{{ form.description }}</textarea>
+            <textarea class="form-control" id="description" name="description" rows="10" required>{{ form.description }}</textarea>
           </div>
 
           <br />
 
           <div class="form-group">
             <label for="descriptionprevious" class="form-label">Previous Description</label>
-            <textarea class="form-control" id="descriptionprevious" name="descriptionprevious" rows="10" >{{ form.descriptionprevious }}</textarea>
+            <textarea class="form-control" id="descriptionprevious" name="descriptionprevious" rows="10" required>{{ form.descriptionprevious }}</textarea>
           </div>
 
           <div class="form-group">
             <label for="solution" class="form-label">Solution</label>
-            <textarea class="form-control" id="solution" name="solution" rows="10">{{ form.solution }}</textarea>
+            <textarea class="form-control" id="solution" name="solution" rows="10" required>{{ form.solution }}</textarea>
           </div>
 
           <!-- Editable field for 'resolved' -->
           <div class="styled-input form-group">
-            <label for="resolved" class="category2">Resolved</label>
+            <label for="resolved" class="category2">Status (Resolved)</label>
             <select id="resolved" name="resolved" class="category2" required>
               <option value="" {% if form.resolved == '' %}selected{% endif %}>Select Choice</option>
               <option value="yes" {% if form.resolved == 'yes' %}selected{% endif %}>Yes</option>
@@ -93,17 +93,18 @@
 
           <div class="form-group">
             <label for="phonenumber" class="form-label">Phone Number</label>
-            <input type="text" class="form-control" id="phonenumber" name="phonenumber" value="{{ form.phonenumber }}" >
+            <input type="text" class="form-control" id="phonenumber" name="phonenumber" value="{{ form.phonenumber }}" required>
           </div>
 
           <div class="styled-input form-group">
             <label for="transfer_to_user" class="category2">Transfer To</label>
-            <input type="text" class="form-control" id="transfer_to_user" name="transfer_to_user" value="{{ form.transfer_to_user }}" >
+            <input type="text" class="form-control" id="transfer_to_user" name="transfer_to_user" value="{{ form.transfer_to_user }}" required>
           </div>
 
           <!-- Button to submit the form -->
-          
-          <input type="submit" value="Update Form" />
+          <!-- <input type="submit" value="Update Form" class="btn btn-primary"/> -->
+          <input type="submit" name="submit" value="Submit">
+
         </form>
       </div>
     </div>

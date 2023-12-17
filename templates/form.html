@@ -41,11 +41,19 @@
             if messages %}
             <ul class="flashes">
               {% for category, message in messages %}
-              <li class="{{ category }}">{{ message }}</li>
+              <li class="text-danger" class="{{ category }}">{{ message }}</li>
               {% endfor %}
             </ul>
             {% endif %} {% endwith %}
             <!-- //Errormessage -->
+          </div>
+
+          <div class="styled-input form-group">
+            {{ form.centreno.label(class="form-label") }} {{
+            form.centreno(class="form-control") }} {% for error in
+            form.centreno.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
           </div>
 
           <div class="styled-input agile-styled-input-top form-group">
@@ -65,17 +73,9 @@
           </div>
 
           <div class="styled-input form-group">
-            {{ form.centreno.label(class="form-label") }} {{
-            form.centreno(class="form-control") }} {% for error in
-            form.centreno.errors %}
-            <span class="text-danger">{{ error }}</span>
-            {% endfor %}
-          </div>
-
-          <div class="styled-input form-group">
-            {{ form.sessionno.label(class="form-label") }} {{
-            form.sessionno(class="form-control") }} {% for error in
-            form.sessionno.errors %}
+            {{ form.sessionno.label(class="category2") }} {{
+            form.sessionno(class="category2", required="required") }} {% for
+            error in form.sessionno.errors %}
             <span class="text-danger">{{ error }}</span>
             {% endfor %}
           </div>
@@ -96,13 +96,37 @@
             {% endfor %}
           </div>
 
+          <!-- Add these hidden fields next to the description and solution fields -->
+          <input
+            type="hidden"
+            id="descriptionTranscript"
+            name="descriptionTranscript"
+          />
+          <input
+            type="hidden"
+            id="descriptionPreviousTranscript"
+            name="descriptionPreviousTranscript"
+          />
+          <input
+            type="hidden"
+            id="solutionTranscript"
+            name="solutionTranscript"
+          />
+
           <div class="form-group" style="margin-right: 43px">
             <label for="description" class="form-label"
               >Description of Problem by Caller</label
             >
             {{ form.description(class="form-control", rows="10") }}
+            <button
+              type="button"
+              id="startDictationDescription"
+              class="btn btn-primary mt-2"
+            >
+              Start
+            </button>
           </div>
-          <br />
+
           <div class="form-group">
             <label for="descriptionprevious" class="form-label"
               >Description of the previous call</label
@@ -113,6 +137,13 @@
           <div class="form-group">
             {{ form.solution.label(class="form-label") }} {{
             form.solution(class="form-control", rows="10") }}
+            <button
+              type="button"
+              id="startDictationSolution"
+              class="btn btn-primary mt-2"
+            >
+              Start
+            </button>
           </div>
 
           <div class="styled-input form-group">
@@ -182,6 +213,318 @@
     });
   </script>
   <!-- //Calendar -->
+  <script src="https://unpkg.com/speech-recognition"></script>
+
+  <script>
+    function startRecording(fieldId) {
+      const recognition = new webkitSpeechRecognition();
+      recognition.lang = "en-AF"; //"en-AF" or "en-NG" or "en-US"
+
+      recognition.onresult = function (event) {
+        const transcript = event.results[0][0].transcript;
+
+        document.getElementById(fieldId + "Transcript").value = transcript;
+
+        document.getElementById(fieldId).value = transcript;
+      };
+
+      recognition.start();
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      function startDictation(inputFieldId, transcriptFieldId) {
+        var recognition = new webkitSpeechRecognition();
+
+        recognition.onresult = function (event) {
+          var result = event.results[0][0].transcript;
+          document.getElementById(inputFieldId).value = result;
+          document.getElementById(transcriptFieldId).value = result;
+        };
+
+        recognition.start();
+      }
+
+      document
+        .getElementById("startDictationDescription")
+        .addEventListener("click", function () {
+          startDictation("description", "descriptionTranscript");
+        });
+
+      document
+        .getElementById("startDictationSolution")
+        .addEventListener("click", function () {
+          startDictation("solution", "solutionTranscript");
+        });
+    });
+
+    // document.addEventListener("DOMContentLoaded", function () {
+    //   var recognition;
+    //   var isDictationActive = false;
+
+    //   function startDictation(
+    //     inputFieldId,
+    //     transcriptFieldId,
+    //     continuous = true,
+    //     interimResults = true
+    //   ) {
+    //     recognition = new webkitSpeechRecognition();
+    //     recognition.continuous = continuous;
+    //     recognition.interimResults = interimResults;
+
+    //     recognition.onresult = function (event) {
+    //       var result = event.results[0][0].transcript;
+    //       document.getElementById(inputFieldId).value = result;
+    //       document.getElementById(transcriptFieldId).value = result;
+    //     };
+
+    //     // Set a longer timeout for continuous recognition
+    //     if (continuous) {
+    //       recognition.onend = function () {
+    //         if (isDictationActive) {
+    //           recognition.start();
+    //         }
+    //       };
+    //     }
+
+    //     recognition.start();
+    //     isDictationActive = true;
+    //     document.getElementById("startDictation").disabled = true;
+    //     document.getElementById("stopDictation").disabled = false;
+    //   }
+
+    //   function stopDictation() {
+    //     if (isDictationActive) {
+    //       recognition.stop();
+    //       isDictationActive = false;
+    //       document.getElementById("startDictation").disabled = false;
+    //       document.getElementById("stopDictation").disabled = true;
+    //     }
+    //   }
+
+    //   // Start dictation when the start button is clicked
+    //   document
+    //     .getElementById("startDictation")
+    //     .addEventListener("click", function () {
+    //       startDictation("description", "descriptionTranscript");
+    //     });
+
+    //   // Stop dictation when the stop button is clicked
+    //   document
+    //     .getElementById("stopDictation")
+    //     .addEventListener("click", stopDictation);
+    // });
+
+    // // another instances for solution field
+
+    // document.addEventListener("DOMContentLoaded", function () {
+    //   var recognition;
+    //   var isDictationActive = false;
+
+    //   function startDictation1(
+    //     inputFieldId,
+    //     transcriptFieldId,
+    //     continuous = true,
+    //     interimResults = false
+    //   ) {
+    //     recognition = new webkitSpeechRecognition();
+    //     recognition.continuous = continuous;
+    //     recognition.interimResults = interimResults;
+
+    //     recognition.onresult = function (event) {
+    //       var result = event.results[0][0].transcript;
+    //       document.getElementById(inputFieldId).value = result;
+    //       document.getElementById(transcriptFieldId).value = result;
+    //     };
+
+    //     // Set a longer timeout for continuous recognition
+    //     if (continuous) {
+    //       recognition.onend = function () {
+    //         if (isDictationActive) {
+    //           recognition.start();
+    //         }
+    //       };
+    //     }
+
+    //     recognition.start();
+    //     isDictationActive = true;
+    //     document.getElementById("startDictation1").disabled = true;
+    //     document.getElementById("stopDictation1").disabled = false;
+    //   }
+
+    //   function stopDictation1() {
+    //     if (isDictationActive) {
+    //       recognition.stop();
+    //       isDictationActive = false;
+    //       document.getElementById("startDictation1").disabled = false;
+    //       document.getElementById("stopDictation1").disabled = true;
+    //     }
+    //   }
+
+    //   // Start dictation when the start button is clicked
+    //   document
+    //     .getElementById("startDictation1")
+    //     .addEventListener("click", function () {
+    //       startDictation1("solution", "solutionTranscript");
+    //     });
+
+    //   // Stop dictation when the stop button is clicked
+    //   document
+    //     .getElementById("stopDictation1")
+    //     .addEventListener("click", stopDictation1);
+    // });
+  </script>
+
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+  <!-- <script>
+  $(document).ready(function () {
+    // Get the resolved and transfer_to_user elements
+    var resolvedSelect = $("#resolved");
+    var transferToUserInput = $("#transfer_to_user");
+
+    // Add change event listener to the resolved field
+    resolvedSelect.change(function () {
+      // Check if "yes" is selected
+      if (resolvedSelect.val() === "yes") {
+        // If "yes" is selected, disable the transfer_to_user field
+        transferToUserInput.prop("disabled", true);
+      } else {
+        // If other value is selected, enable the transfer_to_user field
+        transferToUserInput.prop("disabled", false);
+      }
+    });
+  });
+</script> -->
+  <!-- dropdown elements -->
+  <select id="centreno" name="centreno">
+    <option value="1">Option 1</option>
+    <option value="2">Option 2</option>
+    <!-- Add more options as needed -->
+  </select>
+
+  <select id="centrename" name="centrename" disabled>
+    <!-- Options will be dynamically added here -->
+  </select>
+
+  <select id="state" name="state" disabled>
+    <!-- Options will be dynamically added here -->
+  </select>
+
+  <!-- JavaScript for automatic selection -->
+  <script>
+    $(document).ready(function () {
+      // Event listener for centreno dropdown
+      $("#centreno").on("change", function () {
+        // Select corresponding options in centrename and state
+        var selectedCentreno = $(this).val();
+        $("#centrename").val(selectedCentreno).prop("disabled", false);
+        $("#state").val(selectedCentreno).prop("disabled", false);
+      });
+    });
+  </script>
+
+  <script>
+    $(document).ready(function () {
+      $("#centreno").change(function () {
+        var selectedCentreno = $(this).val();
+
+        // Make an AJAX request to get related options
+        $.ajax({
+          url: "/get_options/" + selectedCentreno,
+          type: "GET",
+          success: function (data) {
+            // Update the options for centrename dropdown
+            var centrenameDropdown = $("#centrename");
+            centrenameDropdown.empty();
+            centrenameDropdown.append(
+              '<option value="">Select Centrename</option>'
+            );
+            for (var i = 0; i < data.length; i++) {
+              centrenameDropdown.append(
+                '<option value="' +
+                  data[i].centrename +
+                  '">' +
+                  data[i].centrename +
+                  "</option>"
+              );
+            }
+
+            // Update the options for state dropdown
+            var stateDropdown = $("#state");
+            stateDropdown.empty();
+            stateDropdown.append('<option value="">Select State</option>');
+            for (var i = 0; i < data.length; i++) {
+              stateDropdown.append(
+                '<option value="' +
+                  data[i].state +
+                  '">' +
+                  data[i].state +
+                  "</option>"
+              );
+            }
+          },
+          error: function (error) {
+            console.log(error);
+          },
+        });
+      });
+    });
+  </script>
+
+  <script>
+    $(document).ready(function () {
+      var descriptionInput = $("#description");
+      var descriptionPreviousInput = $("#descriptionprevious");
+
+      // Add an input event listener to the 'description' field
+      descriptionInput.on("input", function () {
+        // Update the 'descriptionprevious' field with the value of 'description'
+        descriptionPreviousInput.val(descriptionInput.val());
+      });
+
+      // Add an event listener to the centreno dropdown
+      $("#centreno").change(function () {
+        // Get the selected centreno value
+        var selectedCentreno = $(this).val();
+
+        // Make an AJAX request to get the descriptionprevious data
+        $.ajax({
+          url: "/get_descriptionprevious/" + selectedCentreno,
+          type: "GET",
+          success: function (response) {
+            // Update the descriptionprevious text field with the retrieved data
+            var descriptionpreviousData = response.descriptionprevious;
+
+            $("#descriptionprevious").val(descriptionpreviousData);
+          },
+          error: function (error) {
+            console.log(error);
+          },
+        });
+      });
+    });
+  </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Get the number input element
+      var numberInput = document.getElementById("phonenumber");
+
+      numberInput.addEventListener("input", function () {
+        // Get the current value of the number
+        var numberValue = numberInput.value;
+
+        // Check if the length is not equal to 11 digits
+        if (numberValue.length !== 11) {
+          // Clear the input
+          numberInput.setCustomValidity("Please enter exactly 11 digits.");
+        } else {
+          // Clear any previous validation message
+          numberInput.setCustomValidity("");
+        }
+      });
+    });
+  </script>
 
   {% endblock %}
 </body>
