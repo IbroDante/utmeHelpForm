@@ -1,0 +1,126 @@
+{% extends 'layout.html' %} {% block head %}
+<title>Dashboard</title>
+{% endblock %} {% block body %}
+
+<body>
+  <div class="container mt-5">
+    <h1 class="text-center">Welcome, {{ user.username }}!</h1>
+    <h2 class="text-center">Your Form Submissions</h2>
+    <h4 class="text-center" style="color: blue">
+      {% with messages = get_flashed_messages() %} {% if messages %}
+      <ul class="flashes">
+        {% for message in messages %} {{ message }} {% endfor %}
+      </ul>
+      {% endif %} {% endwith %} {% for user_form in user_forms_received %}
+    </h4>
+
+    <div class="sender-info">
+      <p><strong>Sender:</strong> {{ user_form.name }}</p>
+      <a
+        href="{{ url_for('view_form', form_id=user_form.id) }}"
+        class="btn btn-sm {% if user_form.resolved == 'yes' %}btn-primary{% elif user_form.resolved == 'no' %}btn-danger{% endif %}"
+      >
+        View Transferred Forms/Edit
+      </a>
+    </div>
+    {% endfor %}
+
+    <div class="search-container mb-3">
+      <label for="searchInput" class="form-label">Search:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="searchInput"
+        name="search_query"
+        oninput="searchForms()"
+        placeholder="Search Description/Solution"
+      />
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>User Name</th>
+            <th>Phone Number</th>
+            <th>Centre Name</th>
+            <th>Description</th>
+            <th>Solution</th>
+            <th>Status (Resolved)</th>
+            <th>Transfer Recipient</th>
+            <th>Time Stamp</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user_form in user_forms %}
+          <tr>
+            <td>{{ user_form.name }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user_form.phonenumber }}</td>
+            <td>{{ user_form.centrename }}</td>
+            <td>{{ user_form.description }}</td>
+            <td>{{ user_form.solution }}</td>
+            <td>
+              {% if user_form.resolved == 'yes' %}
+              <button class="btn btn-primary btn-sm">Yes</button>
+              {% elif user_form.resolved == 'no' %}
+              <button class="btn btn-danger btn-sm">No</button>
+              {% endif %}
+            </td>
+            <td>{{ user_form.recipient.username }}</td>
+
+            <td>{{ user_form.date_updated }}</td>
+
+            <td>
+              <a
+                href="{{ url_for('edit_form', form_id=user_form.id) }}"
+                class="btn btn-warning btn-sm"
+              >
+                Edit
+              </a>
+              <button
+                class="btn btn-danger btn-sm"
+                onclick="deleteForm('{{ user_form.id }}')"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    function searchForms() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("searchInput");
+      filter = input.value.toUpperCase();
+      table = document.querySelector(".table");
+      tr = table.getElementsByTagName("tr");
+
+      for (i = 0; i < tr.length; i++) {
+        td1 = tr[i].getElementsByTagName("td")[3];
+        td2 = tr[i].getElementsByTagName("td")[4];
+
+        if (td1 && td2) {
+          txtValue1 = td1.textContent || td1.innerText;
+          txtValue2 = td2.textContent || td2.innerText;
+
+          if (
+            txtValue1.toUpperCase().indexOf(filter) > -1 ||
+            txtValue2.toUpperCase().indexOf(filter) > -1
+          ) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+  </script>
+  {% endblock %}
+</body>

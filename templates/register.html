@@ -1,0 +1,129 @@
+{% extends 'layout.html' %} {% block head %}
+<title>Post | Form</title>
+{% endblock %} {% block body %}
+
+<body>
+  <!-- register -->
+  <div class="login-w3ls py-5">
+    <div class="container py-xl-5 py-lg-3">
+      <h3
+        class="title text-capitalize font-weight-light text-dark text-center mb-5"
+      >
+        Register <span class="font-weight-bold">now</span>
+      </h3>
+      <!-- content -->
+      <div class="sub-main-w3 pt-md-4">
+        <form method="POST" action="">
+          {{ form.hidden_tag() }}
+
+          <div class="logo-container">
+            <img
+              src="static/images/logo.png"
+              class="transparent-logo"
+              alt="Logo"
+            />
+          </div>
+
+          <div class="form-style-agile form-group">
+            {{ form.name.label(class="form-label") }} {{
+            form.name(class="form-control", placeholder="Full Name") }} {% for
+            error in form.name.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+          </div>
+
+          <div class="form-style-agile form-group">
+            {{ form.username.label(class="form-label") }} {{
+            form.username(class="form-control", placeholder="Username") }} {%
+            for error in form.username.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+          </div>
+
+          <div class="form-style-agile form-group">
+            {{ form.password.label(class="form-label") }} {{
+            form.password(class="form-control", placeholder="Password") }} {%
+            for error in form.password.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+          </div>
+
+          <div class="form-style-agile form-group">
+            {{ form.confirm_password.label(class="form-label") }} {{
+            form.confirm_password(class="form-control",
+            placeholder="ConfirmPassword") }} {% for error in
+            form.confirm_password.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+          </div>
+          <!-- switch -->
+
+          <!-- //switch -->
+          {{ form.submit(class="btn btn-primary", value="Register") }}
+
+          <p class="text-center dont-do mt-4 text-white">
+            Already have an account?
+            <a href="{{ url_for('login')}}" class="text-white font-weight-bold">
+              Login
+            </a>
+          </p>
+        </form>
+      </div>
+      <!-- //content -->
+    </div>
+  </div>
+
+  <!-- //register -->
+
+  <!-- brands -->
+  <div class="brands-w3ls py-md-5 py-4">
+    <div class="container py-xl-3">
+      <ul class="list-unstyled">
+        <li>
+          <i class="fab fa-supple"></i>
+        </li>
+        <li>
+          <i class="fab fa-angrycreative"></i>
+        </li>
+        <li>
+          <i class="fab fa-aviato"></i>
+        </li>
+        <li>
+          <i class="fab fa-aws"></i>
+        </li>
+        <li>
+          <i class="fab fa-cpanel"></i>
+        </li>
+        <li>
+          <i class="fab fa-hooli"></i>
+        </li>
+        <li>
+          <i class="fab fa-node"></i>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- //brands -->
+
+  <!-- password-script -->
+  <script>
+    window.onload = function () {
+      document.getElementById("password1").onchange = validatePassword;
+      document.getElementById("password2").onchange = validatePassword;
+    };
+
+    function validatePassword() {
+      var pass2 = document.getElementById("password2").value;
+      var pass1 = document.getElementById("password1").value;
+      if (pass1 != pass2)
+        document
+          .getElementById("password2")
+          .setCustomValidity("Passwords Don't Match");
+      else document.getElementById("password2").setCustomValidity("");
+      //empty string means no validation error
+    }
+  </script>
+  <!-- //password-script -->
+
+  {% endblock %}
+</body>

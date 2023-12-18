@@ -1,0 +1,65 @@
+{% extends 'layout.html' %} {% block head %}
+<title>Help Line | Summarry Solution Form</title>
+{% endblock %} {% block body %}
+
+<body>
+  <div class="container mt-5">
+    <h2 class="text-center">Summary Solutions Page</h2>
+
+    <div class="search-container">
+      <label for="searchInput" class="form-label">Search:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="searchInput"
+        oninput="searchSolutions()"
+        placeholder="Search keyword"
+      />
+    </div>
+
+    <div class="solution-cards">
+      {% for form in resolved_forms %}
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">Description:</h3>
+          <h5 class="card-text" style="color: black">{{ form.description }}</h5>
+
+          <h3 class="card-title">Solution:</h3>
+          <h5 class="card-text" style="color: black">{{ form.solution }}</h5>
+
+          <div class="card-footer">
+            <small class="text-muted">
+              <strong>Date/Time of Solution:</strong> {{ form.date_updated }}
+            </small>
+            <br />
+            <small class="text-muted">
+              <strong>Updated by:</strong> {{ form.updated_by }}
+            </small>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <script>
+    function searchSolutions() {
+      var input, filter, cards, card, i, txtValue;
+      input = document.getElementById("searchInput");
+      filter = input.value.toUpperCase();
+      cards = document.querySelectorAll(".card");
+
+      for (i = 0; i < cards.length; i++) {
+        card = cards[i];
+        txtValue = card.textContent || card.innerText;
+
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          card.style.display = "";
+        } else {
+          card.style.display = "none";
+        }
+      }
+    }
+  </script>
+  {% endblock %}
+</body>
