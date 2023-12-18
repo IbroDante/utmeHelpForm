@@ -1,8 +1,7 @@
-# import_data.py
-
-from app import app, db, Form  # Assuming your Form model is in app.py
+from app import app, db, Form 
 import csv
 from datetime import datetime
+
 
 def import_data(csv_filename):
     with open(csv_filename, 'r') as file:
@@ -39,6 +38,6 @@ def import_data(csv_filename):
             # Commit changes to the database
             db.session.commit()
 
-# Example usage
+
 csv_filename = 'ibro1.csv'
 import_data(csv_filename)
