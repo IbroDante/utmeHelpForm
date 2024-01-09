@@ -56,9 +56,9 @@
     <!-- Add code to display all transferred forms for the admin -->
     <div class="table-responsive">
       <table class="table table-bordered" id="adminFormsTable">
-        /
         <thead class="thead-dark">
           <tr>
+            <th>Form Type</th>
             <th>Name</th>
             <th>Sender Username</th>
             <th>Recipient Username</th>
@@ -73,6 +73,7 @@
         <tbody>
           {% for admin_form in transferred_forms %}
           <tr>
+            <td>{{ admin_form.status }}</td>
             <td>{{ admin_form.name }}</td>
             <td>{{ admin_form.sender.username }}</td>
             <td>

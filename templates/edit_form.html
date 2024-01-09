@@ -30,6 +30,11 @@
         <form method="POST">
 
           <div class="styled-input form-group">
+            <label for="status" class="form-control">Form Type</label>
+            <input type="text" class="form-control" id="status" name="status" value="{{ form.status }}" required>
+          </div>
+
+          <div class="styled-input form-group">
             <label for="name" class="form-control">Name</label>
             <input type="text" class="form-control" id="name" name="name" value="{{ form.name }}" required>
           </div>
@@ -110,35 +115,6 @@
     </div>
   </div>
 
-  <!-- brands -->
-  <div class="brands-w3ls py-md-5 py-4">
-    <div class="container py-xl-3">
-      <ul class="list-unstyled">
-        <li>
-          <i class="fab fa-supple"></i>
-        </li>
-        <li>
-          <i class="fab fa-angrycreative"></i>
-        </li>
-        <li>
-          <i class="fab fa-aviato"></i>
-        </li>
-        <li>
-          <i class="fab fa-aws"></i>
-        </li>
-        <li>
-          <i class="fab fa-cpanel"></i>
-        </li>
-        <li>
-          <i class="fab fa-hooli"></i>
-        </li>
-        <li>
-          <i class="fab fa-node"></i>
-        </li>
-      </ul>
-    </div>
-  </div>
-  <!-- //brands -->
 
   <!-- Calendar -->
   <link rel="stylesheet" href="css/jquery-ui.css" />

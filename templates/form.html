@@ -31,6 +31,14 @@
           {{ form.hidden_tag() }}
 
           <div class="styled-input form-group">
+            {{ form.status.label(class="category2") }} {{
+            form.status(class="category2", required="required") }} {% for error
+            in form.status.errors %}
+            <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+          </div>
+
+          <div class="styled-input form-group">
             {{ form.name.label(class="form-control") }} {{
             form.name(class="form-control", required="required") }} {% for error
             in form.name.errors %}
@@ -174,46 +182,19 @@
   </div>
   <!-- admission form -->
 
-  <!-- brands -->
-  <div class="brands-w3ls py-md-5 py-4">
-    <div class="container py-xl-3">
-      <ul class="list-unstyled">
-        <li>
-          <i class="fab fa-supple"></i>
-        </li>
-        <li>
-          <i class="fab fa-angrycreative"></i>
-        </li>
-        <li>
-          <i class="fab fa-aviato"></i>
-        </li>
-        <li>
-          <i class="fab fa-aws"></i>
-        </li>
-        <li>
-          <i class="fab fa-cpanel"></i>
-        </li>
-        <li>
-          <i class="fab fa-hooli"></i>
-        </li>
-        <li>
-          <i class="fab fa-node"></i>
-        </li>
-      </ul>
-    </div>
-  </div>
-  <!-- //brands -->
-
   <!-- Calendar -->
-  <link rel="stylesheet" href="css/jquery-ui.css" />
-  <script src="js/jquery-ui.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+  <link rel="stylesheet" href="static/css/jquery-ui.css" />
+  <script src="static/js/jquery-ui.js"></script>
   <script>
     $(function () {
       $("#datepicker,#datepicker1,#datepicker2,#datepicker3").datepicker();
     });
   </script>
+
   <!-- //Calendar -->
-  <script src="https://unpkg.com/speech-recognition"></script>
+  <script src="https://unpkg.com/speech-recognition-browser"></script>
 
   <script>
     function startRecording(fieldId) {
@@ -374,8 +355,6 @@
     // });
   </script>
 
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
   <!-- <script>
   $(document).ready(function () {
     // Get the resolved and transfer_to_user elements
@@ -449,7 +428,7 @@
             var centrenameDropdown = $("#centrename");
             centrenameDropdown.empty();
             centrenameDropdown.append(
-              '<option value="">Select Centrename</option>'
+              '<option value="">Select Centre Name</option>'
             );
             for (var i = 0; i < data.length; i++) {
               centrenameDropdown.append(
@@ -533,6 +512,28 @@
         } else {
           // Clear any previous validation message
           numberInput.setCustomValidity("");
+        }
+      });
+    });
+  </script>
+
+  <script>
+    $(document).ready(function () {
+      // Validate on form submission
+      $("form").submit(function (event) {
+        // Check if any 'select' placeholder is still selected
+        var invalidSelect = false;
+        $("select").each(function () {
+          if ($(this).val() === "select choice" || $(this).val() === "") {
+            invalidSelect = true;
+            return false; // Break out of the loop
+          }
+        });
+
+        // If invalid select found, prevent form submission and show an alert
+        if (invalidSelect) {
+          alert("Please select valid options for all fields.");
+          event.preventDefault();
         }
       });
     });

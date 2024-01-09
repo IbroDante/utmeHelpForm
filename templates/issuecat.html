@@ -1,0 +1,112 @@
+{% extends 'layout.html' %} {% block head %}
+<title>Issue Categories</title>
+
+<!-- jQuery -->
+<script
+  type="text/javascript"
+  charset="utf8"
+  src="https://code.jquery.com/jquery-3.5.1.js"
+></script>
+
+{% endblock %} {% block body %}
+
+<body>
+  <div class="container mt-5">
+    <h1 class="text-center mb-4">Issue Categories</h1>
+    <h4 class="text-center" style="color: blue">
+      {% with messages = get_flashed_messages() %} {% if messages %}
+      <ul class="flashes">
+        {% for message in messages %} {{ message }} {% endfor %}
+      </ul>
+      {% endif %} {% endwith %}
+    </h4>
+    <div class="search-container mb-3">
+      <label for="searchInput" class="form-label">Search:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="searchInput"
+        name="search_query"
+        oninput="searchForms()"
+        placeholder="Search Issue Categories"
+      />
+    </div>
+    <!-- Add code to display all transferred forms for the admin -->
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead class="thead">
+          <tr>
+            <th>Form Type</th>
+            <th>Name</th>
+            <th>Sender Username</th>
+            <th>Recipient Username</th>
+            <th>Description</th>
+            <th>Solution</th>
+            <th>Issue Categories</th>
+            <th>Status (Resolved)</th>
+            <th>Transfer Date</th>
+            <th>Transfer Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for admin_form in transferred_forms %}
+          <tr>
+            <td>{{ admin_form.status }}</td>
+            <td>{{ admin_form.name }}</td>
+            <td>{{ admin_form.sender.username }}</td>
+            <td>
+              {{ admin_form.recipient.username if admin_form.recipient else
+              'N/A' }}
+            </td>
+            <td>{{ admin_form.description }}</td>
+            <td>{{ admin_form.solution }}</td>
+            <td>{{ admin_form.issuecat }}</td>
+
+            <td>
+              {% if admin_form.resolved == 'yes' %}
+              <button class="btn btn-primary btn-sm">Yes</button>
+              {% elif admin_form.resolved == 'no' %}
+              <button class="btn btn-danger btn-sm">No</button>
+              {% else %}
+              <span style="color: orange">Unknown</span>
+              {% endif %}
+            </td>
+            <td>{{ admin_form.date_updated.strftime('%Y-%m-%d') }}</td>
+            <td>{{ admin_form.date_updated.strftime('%H:%M:%S') }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      function searchForms() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase();
+        table = document.querySelector(".table");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+          td1 = tr[i].getElementsByTagName("td")[5];
+          td2 = tr[i].getElementsByTagName("td")[5];
+
+          if (td1 && td2) {
+            txtValue1 = td1.textContent || td1.innerText;
+            txtValue2 = td2.textContent || td2.innerText;
+
+            if (
+              txtValue1.toUpperCase().indexOf(filter) > -1 ||
+              txtValue2.toUpperCase().indexOf(filter) > -1
+            ) {
+              tr[i].style.display = "";
+            } else {
+              tr[i].style.display = "none";
+            }
+          }
+        }
+      }
+    </script>
+  </div>
+</body>
+{% endblock %}

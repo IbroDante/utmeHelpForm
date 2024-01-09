@@ -1,10 +1,10 @@
 {% extends 'layout.html' %} {% block head %}
-<title>Help Line | Summarry Solution Form</title>
+<title>Help Line | Summary Solution Forms</title>
 {% endblock %} {% block body %}
 
 <body>
   <div class="container mt-5">
-    <h2 class="text-center">Summary Solutions Page</h2>
+    <h2 class="text-center">Summary Solutions</h2>
 
     <div class="search-container">
       <label for="searchInput" class="form-label">Search:</label>
@@ -26,6 +26,8 @@
 
           <h3 class="card-title">Solution:</h3>
           <h5 class="card-text" style="color: black">{{ form.solution }}</h5>
+          <h3 class="card-title">Form Type:</h3>
+          <h5 class="card-text" style="color: black">{{ form.status }}</h5>
 
           <div class="card-footer">
             <small class="text-muted">

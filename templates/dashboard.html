@@ -20,7 +20,7 @@
         href="{{ url_for('view_form', form_id=user_form.id) }}"
         class="btn btn-sm {% if user_form.resolved == 'yes' %}btn-primary{% elif user_form.resolved == 'no' %}btn-danger{% endif %}"
       >
-        View Transferred Forms/Edit
+        View Transferred Forms
       </a>
     </div>
     {% endfor %}
@@ -41,6 +41,7 @@
       <table class="table table-bordered">
         <thead>
           <tr>
+            <th>Form Type</th>
             <th>Name</th>
             <th>User Name</th>
             <th>Phone Number</th>
@@ -56,6 +57,7 @@
         <tbody>
           {% for user_form in user_forms %}
           <tr>
+            <td>{{ user_form.status }}</td>
             <td>{{ user_form.name }}</td>
             <td>{{ user.username }}</td>
             <td>{{ user_form.phonenumber }}</td>

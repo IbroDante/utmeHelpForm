@@ -28,6 +28,10 @@
       </h3>
       <div class="register-form pt-md-4">
         <form action="{{ url_for('view_form', form_id=form.id) }}" method="POST">
+          <div class="styled-input form-group">
+            <label for="status" class="form-control">Form Type</label>
+            <input type="text" class="form-control" id="status" name="status" value="{{ form.status }}" readonly>
+          </div>
 
           <div class="styled-input form-group">
             <label for="name" class="form-control">Name</label>
@@ -107,36 +111,7 @@
     </div>
   </div>
 
-  <!-- brands -->
-  <div class="brands-w3ls py-md-5 py-4">
-    <div class="container py-xl-3">
-      <ul class="list-unstyled">
-        <li>
-          <i class="fab fa-supple"></i>
-        </li>
-        <li>
-          <i class="fab fa-angrycreative"></i>
-        </li>
-        <li>
-          <i class="fab fa-aviato"></i>
-        </li>
-        <li>
-          <i class="fab fa-aws"></i>
-        </li>
-        <li>
-          <i class="fab fa-cpanel"></i>
-        </li>
-        <li>
-          <i class="fab fa-hooli"></i>
-        </li>
-        <li>
-          <i class="fab fa-node"></i>
-        </li>
-      </ul>
-    </div>
-  </div>
-  <!-- //brands -->
-
+  
   <!-- Calendar -->
   <link rel="stylesheet" href="css/jquery-ui.css" />
   <script src="js/jquery-ui.js"></script>

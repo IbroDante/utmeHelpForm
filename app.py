@@ -69,6 +69,7 @@ class User(db.Model, UserMixin):
 
 class Form(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    status = db.Column(db.String(50), nullable=False)
     name = db.Column(db.String(50), nullable=False)
     centreno = db.Column(db.String(10), nullable=False)
     centrename = db.Column(db.String(255), nullable=False)
@@ -94,11 +95,12 @@ class Form(db.Model):
     recipient = db.relationship('User', foreign_keys=[recipient_id], back_populates='forms_received', lazy=True)
     user = db.relationship('User', foreign_keys=[user_id], back_populates='forms_other', lazy=True)
 
-    def __init__(self, name=None, centreno=None, centrename=None, state=None, sessionno=None,
+    def __init__(self, status=None, name=None, centreno=None, centrename=None, state=None, sessionno=None,
                  caller=None, issuecat=None, description=None, descriptionprevious=None,
                  solution=None, resolved=None, phonenumber=None, transfer_to_user=None,
                  sender=None, recipient=None, user=None, date_created=None, date_updated=None,
                  updated_by=None, **kwargs):
+        self.status = status
         self.name = name
         self.centreno = centreno
         self.centrename = centrename
@@ -171,14 +173,15 @@ class LoginForm(FlaskForm):
 
 
 class RegForm(FlaskForm):
-    name = StringField(validators=[InputRequired(), Length(
+    status = SelectField('Form Type', validators=[InputRequired()], choices=[('select choice', 'Select Choice'), ('registration', 'Registration'), ('mock', 'Mock'), ('utme', 'UTME')], render_kw={"placeholder": "Form Type"})
+    name = StringField('Full Name', validators=[InputRequired(), Length(
         min=4, max=100)], render_kw={"placeholder": "Full Name"})
-    centreno = SelectField('Centreno', choices=[], default='', coerce=str)
-    centrename = SelectField('Centrename', choices=[], default='', coerce=str)
+    centreno = SelectField('Centre Number', choices=[], default='', coerce=str)
+    centrename = SelectField('Centre Name', choices=[], default='', coerce=str)
     state = SelectField('State', choices=[], default='', coerce=str)
-    sessionno = SelectField(validators=[InputRequired()], choices=[('select choice', 'Select Choice'), ('session 1', 'Session 1'), ('session 2', 'Session 2'), ('session 3', 'Session 3'), ('session 4', 'Session 4'), ('session 5', 'Session 5')], render_kw={"placeholder": "Select Session"})
+    sessionno = SelectField('Session Number', validators=[InputRequired()], choices=[('select choice', 'Select Choice'), ('session 1', 'Session 1'), ('session 2', 'Session 2'), ('session 3', 'Session 3'), ('session 4', 'Session 4'), ('session 5', 'Session 5')], render_kw={"placeholder": "Select Session"})
     caller = SelectField(validators=[InputRequired()], choices=[('select choice', 'Select Choice'), ('supervisor', 'Supervisor'), ('technical', 'Technical'), ('bvm operator', 'BVM Operator'), ('centre technical', 'Centre Technical'), ('centre admin', 'Centre Admin'), ('state coordinator', 'State Coordinator'), ('zonal technical', 'Zonal Technical'), ('others', 'Others')], render_kw={"placeholder": "Select Caller"})
-    issuecat = SelectField(validators=[InputRequired()], choices=[('select category', 'Select Category'), ('administration', 'Administration'), ('laptop hardware', 'Laptop Hardware'),
+    issuecat = SelectField('Issues Category', validators=[InputRequired()], choices=[('select category', 'Select Category'), ('administration', 'Administration'), ('laptop hardware', 'Laptop Hardware'),
                                    ('network', 'Network'), ('test software', 'Test Software'), ('security', 'Security'), ('biometrics', 'Biometrics'), ('registration sim', 'Registration SIM'), ('registration router', 'Registration Router'), ('registration software', 'Registration Software'),
                                    ('ussd', 'USSD'),
                                    ('thump print', 'Thump Print'),
@@ -199,9 +202,9 @@ class RegForm(FlaskForm):
         choices=[('select choice', 'Select Choice'), ('yes', 'Yes'), ('no', 'No')],
         render_kw={"placeholder": "Select Status"}
     )    
-    phonenumber = IntegerField(validators=[InputRequired()], render_kw={
+    phonenumber = IntegerField('Phone Number', validators=[InputRequired()], render_kw={
                                "placeholder": "Phone Number"})
-    transfer_to_user = SelectField(choices=[], default=-1, coerce=int)
+    transfer_to_user = SelectField('Transfer To', choices=[], default=-1, coerce=int)
     submit = SubmitField("Submit")
 
     def __init__(self, *args, **kwargs):
@@ -371,13 +374,14 @@ def form():
 
         if not validate_user_info(user.id, form.name.data, form.phonenumber.data):
             flash(
-                'Name do not match with your profile creation. Please check your information.')
+                'Full Name do not match with your profile creation. Please check your information.', 'danger')
 
             return render_template("form.html", form=form)
 
         # Check if the user is logged in and has a valid user ID
         if user and user.id:
             new_form = Form(
+                status=form.status.data,
                 name=form.name.data,
                 centreno=form.centreno.data,
                 centrename=form.centrename.data,
@@ -399,7 +403,7 @@ def form():
             db.session.add(new_form)
             db.session.commit()
 
-            flash("Form updated successfully.")
+            flash("Form updated successfully.", 'success')
 
             return redirect(url_for('dashboard'))
 
@@ -416,6 +420,7 @@ def edit_form(form_id):
         return redirect(url_for('dashboard'))
 
     if request.method == 'POST' and request.form.get('submit'):
+        edited_form.status = request.form['status']
         edited_form.name = request.form['name']
         edited_form.centreno = request.form['centreno']
         edited_form.centrename = request.form['centrename']
@@ -431,7 +436,7 @@ def edit_form(form_id):
         edited_form.transfer_to_user = request.form['transfer_to_user']
 
         db.session.commit()
-        flash('Form updated successfully!')
+        flash('Form updated successfully!', 'success')
         return redirect(url_for('dashboard'))
 
     # Pass the existing form data to the template
@@ -460,7 +465,7 @@ def view_form(form_id):
     form = Form.query.get(form_id)
 
     # Check if the logged-in user is an admin
-    if current_user.roles == 'admin':
+    if current_user.roles == 'admin' 'superuser':
 
         if request.method == 'POST':
             form.resolved = request.form.get('resolved')
@@ -552,6 +557,11 @@ def frequently_selected_values():
                            frequent_centreno_values=frequent_centreno_values,
                            frequent_centrename_values=frequent_centrename_values)
 
+@app.route('/issuecat')
+def issuecat():
+    transferred_forms = Form.query.filter(Form.transfer_to_user.isnot(None)).order_by(Form.date_updated.desc()).all()
+
+    return render_template('issuecat.html', transferred_forms=transferred_forms)
 
 if __name__ == '__main__':
     with app.app_context():
